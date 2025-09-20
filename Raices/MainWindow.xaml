@@ -5,8 +5,110 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Raices"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+          Title="Raíces de Funciones — Bisección y Regla Falsa" Height="640" Width="980" WindowStartupLocation="CenterScreen">
+    <Grid Margin="14">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="12"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <!-- ENTRADA -->
+        <Border Grid.Column="0" Padding="12" CornerRadius="10" BorderBrush="#DDD" BorderThickness="1">
+            <StackPanel>
+                <TextBlock Text="Parámetros" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                <!-- Método -->
+                <GroupBox Header="Método" Margin="0,0,0,10">
+                    <StackPanel Margin="8">
+                        <RadioButton x:Name="rbBiseccion" Content="Bisección" IsChecked="True" Margin="0,0,0,6"/>
+                        <RadioButton x:Name="rbReglaFalsa" Content="Regla Falsa"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Función -->
+                <GroupBox Header="Función" Margin="0,0,0,10">
+                    <StackPanel Margin="8">
+                        <ComboBox x:Name="cbFuncion" SelectedIndex="0">
+                            <ComboBoxItem Content="f(x) = 4x^3 − 6x^2 + 7x − 2.3"/>
+                            <ComboBoxItem Content="g(x) = x^2·√|cos(x)| − 5"/>
+                        </ComboBox>
+                        <TextBlock Margin="0,6,0,0" TextWrapping="Wrap"
+                                   Text="Sugerencias de intervalos:  Bisección(f): [0, 1].  Regla Falsa(g): [-3, -2] o [2, 3]."/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Valores -->
+                <UniformGrid Columns="2" Rows="3" Margin="0,0,0,10">
+                    <TextBlock Text="xi:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtXi" Text="0" Margin="0,4,0,4"/>
+                    <TextBlock Text="xf:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtXf" Text="1" Margin="0,4,0,4"/>
+                    <TextBlock Text="ea máx (fracción):" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtEamax" Text="0.0001" Margin="0,4,0,4"/>
+                </UniformGrid>
+                <CheckBox x:Name="chkEaPorc" Content="Interpretar ea como %" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Calcular" Width="110" Click="Calcular_Click"/>
+                    <Button Content="Limpiar" Width="90" Click="Limpiar_Click"/>
+                </StackPanel>
+
+                <Separator Margin="0,12,0,12"/>
+                <TextBlock Text="Nota: todos los valores se muestran con seis decimales." Foreground="#555"/>
+            </StackPanel>
+        </Border>
+
+        <!-- SEPARADOR -->
+        <Rectangle Grid.Column="1" Fill="Transparent"/>
+
+        <!-- RESULTADOS / TABLA -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Padding="12" CornerRadius="10" BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Resultados" FontWeight="Bold" FontSize="16"/>
+                        <TextBlock x:Name="txtResumenMetodo" Margin="0,4,0,0" Foreground="#666"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Raíz" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblRaiz" FontSize="20"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="f(raíz)" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblFRAIZ" FontSize="20"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="Iteraciones" FontWeight="SemiBold"/>
+                        <TextBlock x:Name="lblIter" FontSize="20"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <DataGrid x:Name="dgIteraciones" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                      HeadersVisibility="Column" GridLinesVisibility="Horizontal" RowHeaderWidth="0" BorderBrush="#DDD" BorderThickness="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="n" Binding="{Binding N}" Width="50"/>
+                    <DataGridTextColumn Header="xi" Binding="{Binding Xi, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="xu" Binding="{Binding Xf, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="xr" Binding="{Binding Xr, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="f(xi)" Binding="{Binding FXi, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="f(xu)" Binding="{Binding FXu, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="f(xr)" Binding="{Binding FXr, StringFormat=F6}" Width="*"/>
+                    <DataGridTextColumn Header="ea (%)" Binding="{Binding EaPercent, StringFormat=F6}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Window>

@@ -1,12 +1,70 @@
-﻿<Window x:Class="Raices.MainWindow"
+<Window x:Class="Raices.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Raices"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Calculadora de Raíces" Height="520" Width="860" MinHeight="520" MinWidth="780">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" VerticalAlignment="Top" >
+            <TextBlock Text="Calculadora de raíces" FontSize="24" FontWeight="Bold" />
+            <TextBlock Text="Ingresa la función y las condiciones iniciales para obtener una aproximación de la raíz." Margin="0,5,0,20" TextWrapping="Wrap" />
 
-    </Grid>
+            <TextBlock Text="Función f(x):" FontWeight="SemiBold" />
+            <TextBox x:Name="FunctionTextBox" Margin="0,5,0,10" Text="x^3 - x - 2" />
+
+            <TextBlock Text="Derivada f'(x) (opcional, se calculará numéricamente si se deja vacío):" FontWeight="SemiBold" />
+            <TextBox x:Name="DerivativeTextBox" Margin="0,5,0,20" Text="3*x^2 - 1" />
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Tolerancia:" FontWeight="SemiBold" />
+                    <TextBox x:Name="ToleranceTextBox" Margin="0,5,0,0" Text="0.000001" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="Máx. iteraciones:" FontWeight="SemiBold" />
+                    <TextBox x:Name="MaxIterationsTextBox" Margin="0,5,0,0" Text="100" />
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Formato de números:" FontWeight="SemiBold" />
+                    <TextBlock Text="Se aceptan puntos o comas como separador decimal." TextWrapping="Wrap" Margin="0,5,0,0" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Header="Método de Newton-Raphson" Grid.Column="0" Margin="0,0,10,0">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Aproximación inicial x₀:" FontWeight="SemiBold" />
+                        <TextBox x:Name="NewtonInitialGuessTextBox" Margin="0,5,0,10" Text="1" />
+                        <Button Content="Calcular con Newton" Click="CalculateNewton_Click" Height="35" />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Método de la Secante" Grid.Column="1">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Aproximación inicial x₀:" FontWeight="SemiBold" />
+                        <TextBox x:Name="SecantFirstGuessTextBox" Margin="0,5,0,10" Text="1" />
+                        <TextBlock Text="Aproximación inicial x₁:" FontWeight="SemiBold" />
+                        <TextBox x:Name="SecantSecondGuessTextBox" Margin="0,5,0,10" Text="2" />
+                        <Button Content="Calcular con la Secante" Click="CalculateSecant_Click" Height="35" />
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+
+            <TextBlock Text="Funciones disponibles: sin, cos, tan, asin, acos, atan, exp, log, sqrt, abs, sign." TextWrapping="Wrap" Margin="0,0,0,10" />
+
+            <TextBlock Text="Resultados" FontSize="18" FontWeight="Bold" Margin="0,10,0,5" />
+            <TextBox x:Name="ResultsTextBox" Height="200" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+        </StackPanel>
+    </ScrollViewer>
 </Window>
